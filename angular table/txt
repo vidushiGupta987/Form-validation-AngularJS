@@ -1,0 +1,46 @@
+ localStorage.setItem("sample_data", JSON.stringify($scope.items));
+	localStorage.setItem("env", 'dev');
+	
+if(localStorage.getItem('sample_data') != null){
+   $scope.items = JSON.parse(localStorage.getItem('sample_data'));
+   $scope.env = localStorage.getItem("env");
+}
+
+
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add Row</button>
+	
+			<!-- The Modal -->
+			<div class="modal" id="myModal">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				
+				  <!-- Modal Header -->
+				  <div class="modal-header">
+					<h4 class="modal-title">Add User Data</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				  </div>
+				  
+				  <!-- Modal body -->
+				  <div class="modal-body">
+<form class="needs-validation" novalidate>
+						  <div class="form-group">
+							  <label for="userInfoName">Name <sup>*</sup></label>
+							  <input type="text" class="form-control form-control-sm" id="userInfoName" ng-model="name" placeholder="Enter Name" required>
+						   </div>
+						   <div class="form-group">
+							<label for="userInfoEmail">Email <sup>*</sup></label>
+							<input type="email" class="form-control form-control-sm" id="userInfoEmail" ng-model="email" placeholder="Enter Email" required>
+						 </div>
+						   <div class="form-group">
+							 <label for="userInfoPhone">Phone <sup>*</sup></label>
+							 <input type="number" class="form-control form-control-sm" id="userInfoPhone" ng-model="phone" placeholder="Enter Phone " required>
+						   </div>
+						   <div class="form-group">
+							  <label for="userInfoGender">Select Gender (Male/Female) <sup>*</sup></label>
+							  <input type="text" class="form-control form-control-sm" id="userInfoGender" ng-model="gender" placeholder="Enter Gender" required>
+							</div>
+							<div class="form-group">
+							   <label for="userInfoAge">Age <sup>*</sup></label>
+							  <input type="number" class="form-control form-control-sm" id="userInfoAge"ng-model="age"  placeholder="Enter Age" required>
+							</div>
+						 </form>

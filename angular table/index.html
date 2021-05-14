@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="angularTable">
+	<head>
+		<meta charset="utf-8">
+		<title>Angular Table</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="Kim Maida">
+
+		<!-- JS Libraries -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js" type="text/javascript"></script>
+		<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js" type="text/javascript"></script>
+
+		<!-- Angular Scripts -->
+		<script src="script.js" type="text/javascript"></script>
+		
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+		<link rel="stylesheet" href="./font-awesome/css/all.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+
+	<body>
+		<nav class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" style="background-color:#3b2a55;">
+			<div class="container-fluid">
+			   <span> <i class="fas fa-user-tag ml-3" style=" font-size:25px; color: white;"></i></span> 
+			   <span class="mx-auto"><h1 style="color:white;">User Management System</h1></span>
+			</div>
+		  </nav>
+		   <!--second navbar-->
+         <nav class="navbar navbar-dark mt-5 mx-auto" style="background-color: #3b2a55; width:60%">
+            <i class="fas fa-users ml-3" style='font-size:25px; color:white'></i>
+			 <span class="mx-auto " style="color: white;"><h2>User Data List</h2></span>
+          </nav>
+  <!--end of second navbar-->
+	<div class="container">
+		<div ng-controller="PageCtrl">
+		<div class="container"> <input  ng-model="search.name" type="search" id="search-box" class="form-control rounded my-3 py-3" placeholder="Search" aria-label="Search"
+			aria-describedby="search-addon"/></div>
+    
+			<br />
+	
+		<div class="container">
+			<!-- modal -->
+			
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add Row</button>
+	
+			<!-- The Modal -->
+			<div class="modal" id="myModal">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				
+				  <!-- Modal Header -->
+				  <div class="modal-header">
+					<h4 class="modal-title">Add User Data</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				  </div>
+				  
+				  <!-- Modal body -->
+				  <div class="modal-body">
+				 
+					<form name="myForm" class="needs-validation" novalidate>
+						  <div class="form-group">
+							 
+						<label for="myFormName">	<b>Name: *</b></label><br>
+								<input type="text" name="name" ng-model="name" placeholder="Enter Name" required ng-pattern="/^[a-zA-z\s]*$/">
+								<span style="color: red;" ng-show="myForm.name.$error.pattern"><b>Not a valid Name!</b></span>
+								<span style="color:red" ng-show="myForm.name.$dirty && myForm.name.$invalid">
+								<span ng-show="myForm.name.$error.required"><b>Name is required.</b></span>
+								</span>
+								<br><br>
+								
+								<label for="myFormEmail"><b>Email: *</b></label><br>
+								<input type="email" name="email" ng-model="email" placeholder="Enter Email" required ng-pattern="/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/" ng-disabled="myForm.name.$invalid">
+								<span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+								<span ng-show="myForm.email.$error.required"><b>Email is required.</b></span>
+								<span ng-show="myForm.email.$error.pattern"><b>Invalid email address.</b></span>
+								</span>
+								<br><br>
+								<label for="myFormContact"><b>Contact: *</b></label>
+								<br>
+									<input type="text" name="phone" ng-model="phone" placeholder="Enter Contact Number" required ng-pattern="/^\+?\d{2}[- ]?\d{3}[- ]?\d{5}$/" ng-disabled="myForm.name.$invalid||myForm.email.$invalid">
+									<span style="color: red;" ng-show="myForm.phone.$error.pattern"><b>Number should be 10 digits</b></span>
+									<span style="color:red" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
+									<span ng-show="myForm.phone.$error.required"><b>Phone is required.</b></span>
+									</span>
+								<br><br>
+									<label for="myFormGender"><b>Gender: *</b></label><br>
+										<input type="text" name="gender" placeholder="Enter Gender" ng-model="gender" required pattern="male|female" ng-disabled="myForm.name.$invalid||myForm.email.$invalid||myForm.phone.$invalid">
+										<span style="color: red;" ng-show="myForm.gender.$error.pattern"><b>Write only "male" or "female"</b></span>
+										<span style="color:red" ng-show="myForm.gender.$dirty && myForm.gender.$invalid">
+										<span ng-show="myForm.gender.$error.required"><b>Gender is required.</b></span>
+										</span>
+										<br><br>
+										<label for="myFormAge"><b>Age: *</b></label><br>
+											<input type="text" name="age" ng-model="age" placeholder="Enter Age" required ng-pattern="/^(?:1[8-9]|[2-5][0-9]|60)$/" ng-disabled="myForm.name.$invalid||myForm.email.$invalid||myForm.phone.$invalid||myForm.gender.$invalid">
+											<span style="color: red;" ng-show="myForm.age.$error.pattern"><b>Enter a valid age</b></span>
+											<span style="color:red" ng-show="myForm.age.$dirty && myForm.age.$invalid">
+											<span ng-show="myForm.age.$error.required"><b>Age is required.</b></span>
+											</span>
+										<br><br>
+									
+													<p class="checkStyle"name="check" ng-model="check" ng-show="myForm.age.$valid"><b> Tap anywhere on the form to continue</b> </b>
+													</p> 
+										
+							 </div>
+						 </form>
+				
+				  </div>
+				  
+				  <!-- Modal footer -->
+				  <div class="modal-footer">
+					<button type="submit" class="btn btn-danger" ng-model="submit"
+					ng-disabled=" myForm.name.$untouched || myForm.name.$invalid ||  
+					myForm.email.$untouched || myForm.email.$invalid || myForm.phone.$untouched || myForm.phone.$invalid
+				  || myForm.gender.$untouched || myForm.gender.$invalid || myForm.age.$untouched || myForm.age.$invalid"  id="saveChanges" ng-click=" addUserData(); formHandler(); " >Submit</button>
+					
+				
+					
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				  </div>
+				  
+				</div>
+			  </div>
+			</div>
+           <!--modal 2-->
+		    <!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header modal-header-success">
+			<p style="font-weight: bolder;">The user detail has been added successfully!</p>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		</div>
+		
+	
+	  </div>
+	</div>
+  </div>
+		   <!--modal 2 end -->
+			
+	</div>
+        
+			<table class="table-responsive">
+				<table class="table table-bordered mt-5">
+					<thead>
+						<!--queryBy has the value ="$" as defined at .controller in app.js-->
+						<!--queryBy is used to search from all columns -->
+						<tr mg-model="queryBy">
+						  <th scope="col" value="$">Name</th>
+						  <th scope="col" value="$">Email</th>
+						  <th scope="col" value="$">Phone</th>
+						  <th scope="col" value="$">Gender</th>
+						  <th scope="col" value="$">Age</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<!--ng-repeat directive repeats td element for each item in a table-->
+						  <tr  ng-repeat="item in filtered = items | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+						   <!--expressions used to bind data to the HTML -->
+							  <td> {{   item.name    }} </td>
+							  <td> {{   item.email   }} </td>
+							  <td> {{   item.phone   }} </td>
+							  <td><i class=" fas fa-{{   item.gender  }} "></i></td>
+							  <td > {{   item.age     }} </td>
+						  </tr>
+					  </tbody>
+						</table>
+						<pagination page="currentPage" max-size="noOfPages" total-items="totalItems" items-per-page="entryLimit"></pagination>
+		
+		
+		</div>
+	
+	</div>
+
+	
+	<!-- footer -->
+	<div class="container-fluid-sm">
+		<footer class="fixed-bottom" >
+		  <img class="push"src="./img/pbLogo.jpg">
+		  <div class="footer-copyright text-left mt-3 ml-4 py-3">© Patientbond 2019
+		  </div>
+	  
+		</footer>		
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.7.1/angular-local-storage.min.js"></script>
+    <script src="./font-awesome/js/all.js"></script>
+	<script src="modal.js"></script>
+	</body>
+</html>
